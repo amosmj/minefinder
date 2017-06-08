@@ -20,12 +20,12 @@ def buildGrid(width , height,difficulty):
         minePlace.append(newMineLoc)
     print("mine placed: " ,str(minePlace))
     for mp in minePlace:
-        x = math.floor(mp/width)
-        y = mp % width
-        print('placment: ',str(mp),', X: ',str(x), ', Y: ',str(y))
+        column = math.floor(mp/width)
+        row = mp % width
+        print('placment: ',str(mp),', Column: ',str(column), ', Row: ',str(row))
         #print('placement row: ',grid[y])
-        print('placement cell: ', grid[y][x])
-        grid[y][x] = 9
+        print('placement cell: ', grid[row][column])
+        grid[row][column] = 9
         #for i in grid:
         #    print(i)
     return grid
@@ -36,6 +36,6 @@ height = int(input('how high do you want the grid?'))
 #difficulty = input('how tough do you want the grid?')
 #may need to sanitize inputs
 field = buildGrid(width, height, 0)
-for y in field:
-    print(y)
+for row in field:
+    print(row)
     
