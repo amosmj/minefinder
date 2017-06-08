@@ -3,9 +3,9 @@ import math
 
 def buildGrid(width , height,difficulty):
     grid = []
-    xRow = [0] * width
+    #xRow = [0] * width
     for y in range(height):
-        grid.append(xRow)    
+        grid.append([0] * width)    
     
     mines = math.floor((width*height/10))
     minePlace = []
@@ -26,8 +26,8 @@ def buildGrid(width , height,difficulty):
         #print('placement row: ',grid[y])
         print('placement cell: ', grid[y][x])
         grid[y][x] = 9
-        for i in grid:
-            print(i)
+        #for i in grid:
+        #    print(i)
     return grid
 
 print('Welcome to MineFinder')
@@ -36,6 +36,6 @@ height = int(input('how high do you want the grid?'))
 #difficulty = input('how tough do you want the grid?')
 #may need to sanitize inputs
 field = buildGrid(width, height, 0)
-#for y in field:
-#    print(y)
+for y in field:
+    print(y)
     
