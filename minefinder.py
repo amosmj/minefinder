@@ -10,7 +10,7 @@ def buildGrid(width , height, difficulty):
     grid = numpy.random.choice(a=[0,9],size=(height, width),p=difficulty_dictionary[difficulty])
     #padding the array to make searching it easier
     grid = numpy.lib.pad(array = grid, pad_width=(1,1), mode = 'constant', constant_values = (0))
-    print(grid)
+    #print(grid)
     
     #now I want to populate the number of mines adjacent to any cell
     for h in range(grid.shape[1]):
@@ -24,22 +24,48 @@ def buildGrid(width , height, difficulty):
                 #and one column
                 if h > 0 and h <= height and w > 0 and w <= width:
                     testSquare = grid[(h-1):(h+2),(w-1):(w+2)]
-                    print(testSquare)
+                    #print(testSquare)
                     #next count the 9s in the window
                     #now write that number to the cell
-            
-    print(grid)
+                    #print (testSquare)
+                    squareVal = list(testSquare.flatten()).count(9)
+                    testSquare[1:2,1:2] = squareVal
+
+    #finally, strip the junk columns off of the top and bottom and both sides
+    grid = numpy.delete(arr = grid, obj = [w], axis = 1)
+    grid = numpy.delete(arr = grid, obj = [0], axis = 1)
+    grid = numpy.delete(arr = grid, obj = [h], axis = 0)
+    grid = numpy.delete(arr = grid, obj = [0], axis = 0)
+    #output the grid
     return grid
 
-def testCell(column, row):
-    return findings
+def testCell(answerGrid, column, row):
+    print (answerGrid[row,[column]])
+    return 0 #foundValue
+def updateCell(testGrid, column, row, value):
+    return testedGrid
 
 def solvePuzzle(grid):
+    testField = numpy.empty_like(grid)
+    game_over = False
+    while game_over == False:
+        print(testField)
+        column = input('Which column contains the cell?')
+        row = input('Which row contains the cell?')
+        result = testCell(field, column, row)
+        if result == 9:
+            #player found a bomb
+            game_over = True
+        else:
+            #no bomb found, update the grid and move on
+            a = 1
     return 0
 
-print('Welcome to MineFinder')
-width = int(input('how wide do you want the grid?'))
-height = int(input('how high do you want the grid?'))
-difficulty = input('Enter 1, 2, or 3 for easy, medium, or hard:')
-#may need to sanitize inputs
-field = buildGrid(width, height, difficulty)    
+if __name__ == "__main__":
+    print('Welcome to MineFinder')
+    width = int(input('how wide do you want the grid?'))
+    height = int(input('how high do you want the grid?'))
+    difficulty = input('Enter 1, 2, or 3 for easy, medium, or hard:')
+    #may need to sanitize inputs
+    field = buildGrid(width, height, difficulty)  
+    solvePuzzle(field)
