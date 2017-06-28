@@ -5,7 +5,7 @@ def buildGrid(width , height, difficulty):
     #slack study.py user mikelane basically wrote this for me
     #He collapsed 20 or so lines of code into 1
     difficulty_dictionary = {'1' : [0.9 ,0.1 ],'2' : [0.75,0.25],'3' : [0.6 ,0.4 ]}
-    #this like creates the playing field, populated with 0 (nothing) or 9 (a mine)
+    #this creates the playing field, populated with 0 (nothing) or 9 (a mine)
     #the difficulty parameter sets the probablity based on the dictionary above
     grid = numpy.random.choice(a=[0,9],size=(height, width),p=difficulty_dictionary[difficulty])
     #padding the array to make searching it easier
@@ -30,6 +30,7 @@ def buildGrid(width , height, difficulty):
                     #print (testSquare)
                     squareVal = list(testSquare.flatten()).count(9)
                     testSquare[1:2,1:2] = squareVal
+                    grid[(h-1):(h+2),(w-1):(w+2)] = testSquare
 
     #finally, strip the junk columns off of the top and bottom and both sides
     grid = numpy.delete(arr = grid, obj = [w], axis = 1)
@@ -39,33 +40,43 @@ def buildGrid(width , height, difficulty):
     #output the grid
     return grid
 
-def testCell(answerGrid, column, row):
-    print (answerGrid[row,[column]])
-    return 0 #foundValue
+
+
 def updateCell(testGrid, column, row, value):
     return testedGrid
 
 def solvePuzzle(grid):
-    testField = numpy.empty_like(grid)
-    game_over = False
-    while game_over == False:
-        print(testField)
-        column = input('Which column contains the cell?')
-        row = input('Which row contains the cell?')
-        result = testCell(field, column, row)
-        if result == 9:
-            #player found a bomb
-            game_over = True
-        else:
-            #no bomb found, update the grid and move on
-            a = 1
+    
     return 0
 
 if __name__ == "__main__":
+    answerField = [[0]]
+    testField = [[0]]
     print('Welcome to MineFinder')
     width = int(input('how wide do you want the grid?'))
     height = int(input('how high do you want the grid?'))
     difficulty = input('Enter 1, 2, or 3 for easy, medium, or hard:')
     #may need to sanitize inputs
-    field = buildGrid(width, height, difficulty)  
-    solvePuzzle(field)
+    answerField = buildGrid(width, height, difficulty)  
+    testField = numpy.zeros_like(answerField)
+    #need to find an empty space to open to get started
+    
+    game_over = False
+    guesses = 0
+    
+    while game_over == False:
+        print(testField)
+        print('Press Q to exit the program at any time')
+        column = input('Which column contains the cell?')
+        row = input('Which row contains the cell?')
+        if column != 'Q' and column != 'q' and row != 'Q' and row !='q': 
+            result = answerField[int(column), int(row)]
+            if result == 9:
+                #player found a bomb
+                game_over = True
+                print('BOOM! you lose')
+            else:
+                #no bomb found, update the grid and move on
+                a = 1
+        else:
+            game_over = True
